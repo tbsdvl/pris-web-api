@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+      "rootDirs": ["src"],
+      "lib": ["ES2020"],
+      "module": "NodeNext",
+      "moduleResolution": "NodeNext",
+      "target": "ES2020",
+      "sourceMap": true,
+      "composite": true,
+      "declaration": true,
+      "declarationMap": true,
+      "incremental": true,
+      "esModuleInterop": true,
+      "types": ["jest", "node", "@types/jest"],
+      "outDir": "dist",
+      "noEmit": false,
+  },
+  "ts-node": {
+      "esm": true,
+      "experimentalSpecifierResolution": "node",
+  },
+  "include": ["src/**/*", "__tests__/**/*", "app.ts"]
+}
