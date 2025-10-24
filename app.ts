@@ -24,7 +24,7 @@ export default (): FastifyInstance => {
   });
   
   fastify.register(cors, {
-    origin: [process.env.WEB_URL], // find out which ports to use for local development
+    origin: [process.env.WEB_URL],
     credentials: true
   });
 
