@@ -6,11 +6,20 @@ import fastifyCookie from '@fastify/cookie';
 import dotenv from 'dotenv';
 import routes from './src/routes';
 import { authPlugin } from './src/handlers/auth';
+import path from 'path';
+import fs from 'fs';
+import { Http2SecureServer } from 'http2';
 dotenv.config();
 
-export default (): FastifyInstance => {
+export default (): FastifyInstance<Http2SecureServer> => {
   const fastify = Fastify({
     logger: true,
+    http2: true,
+    https: {
+      allowHTTP1: true,
+      key: fs.readFileSync(path.join(path.dirname(''), "certs", "localhost-key.pem")), // Path to private key
+      cert: fs.readFileSync(path.join(path.dirname(''), "certs", "localhost-cert.pem")), // Path to certificate
+    }
   });
 
   fastify.register(authPlugin);

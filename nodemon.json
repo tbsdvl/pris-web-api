@@ -1,6 +1,7 @@
 {
+  "watch": ["src", "server.ts", "app.ts"],
+  "ext": "ts",
   "execMap": {
-    "ts": "node --loader ts-node/esm"
-  },
-  "ext": "ts,json"
+    "ts": "node --no-warnings=ExperimentalWarning --loader ts-node/esm"
+  }
 }

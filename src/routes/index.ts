@@ -7,12 +7,6 @@ import { checkIsTenantAdmin } from '../services/userService';
 import { cca } from '../config/msalConfig';
 dotenv.config();
 
-// Set the NODE_TLS_REJECT_UNAUTHORIZED environment variable to 0
-// This allows the HTTPS request to proceed with self-signed certificates
-if (process.env.NODE_ENV === 'development') {
-  process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
-}
-
 /**
  * Encapsulates the routes
  * @param {FastifyInstance} fastify  Encapsulated Fastify Instance
