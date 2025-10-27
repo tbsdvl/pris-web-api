@@ -10,8 +10,8 @@ const config: JestConfigWithTsJest = {
   },
   testPathIgnorePatterns: ['./dist'],
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
-  "modulePaths": [
-    "<rootDir>/src"
+  'modulePaths': [
+    '<rootDir>/src'
   ],
   moduleNameMapper: {
     '^(\\.{1,2}/.*)\\.js$': '$1'

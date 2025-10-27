@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "NODE_OPTIONS=--experimental-vm-modules npx jest --config jest.config.ts --coverage true --watchAll",
+    "dev": "nodemon server.ts",
+    "build": "tsc"
   },
   "keywords": [],
   "author": "",
@@ -20,12 +22,15 @@
     "typescript": "^5.9.3"
   },
   "dependencies": {
+    "@azure/msal-node": "^3.8.0",
     "@fastify/cookie": "^11.0.2",
     "@fastify/cors": "^11.1.0",
     "@fastify/secure-session": "^8.2.0",
     "axios": "^1.12.2",
     "fastify": "^5.6.1",
     "joi": "^17.13.3",
+    "jsonwebtoken": "^9.0.2",
+    "jwks-rsa": "^3.2.0",
     "node-fetch": "^3.3.2",
     "redis": "^5.9.0",
     "redis-om": "^0.4.7"

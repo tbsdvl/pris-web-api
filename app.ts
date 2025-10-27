@@ -3,14 +3,17 @@
 import Fastify, { FastifyInstance } from 'fastify';
 import cors from '@fastify/cors';
 import fastifyCookie from '@fastify/cookie';
-import dotenv from "dotenv";
+import dotenv from 'dotenv';
 import routes from './src/routes';
+import { authPlugin } from './src/handlers/auth';
 dotenv.config();
 
 export default (): FastifyInstance => {
   const fastify = Fastify({
-    logger: true
+    logger: true,
   });
+
+  fastify.register(authPlugin);
 
   fastify.register(fastifyCookie, {
     secret: process.env.JWT_SECRET,
