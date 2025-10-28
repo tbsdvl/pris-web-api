@@ -4,7 +4,6 @@ import { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
 import REPLY_STATUS from '../models/reply-status.model';
 import dotenv from 'dotenv';
 import { checkIsTenantAdmin } from '../services/userService';
-import { cca } from '../config/msalConfig';
 dotenv.config();
 
 /**
@@ -38,8 +37,7 @@ const routes = async (fastify: FastifyInstance, options) => {
         // Call the user service to check admin status
         const adminCheckResult = await checkIsTenantAdmin({
           tid,
-          oboAssertion: token,
-          cca
+          oboAssertion: token
         });
 
         // Return the admin status

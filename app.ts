@@ -22,7 +22,10 @@ export default (): FastifyInstance<Http2SecureServer> => {
     }
   });
 
-  fastify.register(authPlugin);
+  fastify.register(cors, {
+    origin: [process.env.WEB_URL],
+    credentials: true
+  });
 
   fastify.register(fastifyCookie, {
     secret: process.env.JWT_SECRET,
@@ -35,10 +38,7 @@ export default (): FastifyInstance<Http2SecureServer> => {
     }
   });
   
-  fastify.register(cors, {
-    origin: [process.env.WEB_URL],
-    credentials: true
-  });
+  fastify.register(authPlugin);
 
   fastify.register(routes);
   

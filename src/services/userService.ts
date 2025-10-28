@@ -1,5 +1,6 @@
 // userService.ts
 import { ConfidentialClientApplication, OnBehalfOfRequest } from "@azure/msal-node";
+import { createCCAForTenant } from "../config/msalConfig.js";
 
 export type AdminCheckResult = {
   isAdmin: boolean;
@@ -23,25 +24,25 @@ export const ADMIN_ROLE_TEMPLATE_IDS = new Set<string>([
 /**
  * Uses OBO to call Microsoft Graph and check if the caller is in any admin directory roles.
  * @param params.tid          Tenant ID extracted from the verified SPA token.
- * @param params.oboAssertion The raw SPA bearer token you verified.
- * @param params.cca          A configured msal-node ConfidentialClientApplication.
+ * @param params.oboAssertion The raw SPA bearer token you verified.       A configured msal-node ConfidentialClientApplication.
  */
 export async function checkIsTenantAdmin(params: {
   tid: string;
   oboAssertion: string;
-  cca: ConfidentialClientApplication;
 }): Promise<AdminCheckResult> {
-  const { tid, oboAssertion, cca } = params;
+  const { tid, oboAssertion } = params;
 
   // 1) OBO for Graph
   const oboReq: OnBehalfOfRequest = {
-    authority: `https://login.microsoftonline.com/${tid}`,
+    authority: `https://login.microsoftonline.com/${tid}`, // Specific tenant authority
     oboAssertion,
-    scopes: ["https://graph.microsoft.com/.default"], // requires admin-consented delegated perms
+    scopes: ["https://graph.microsoft.com/.default"],
   };
 
+  const cca = createCCAForTenant(tid);
   const obo = await cca.acquireTokenOnBehalfOf(oboReq);
   if (!obo?.accessToken) {
+    console.error('OBO failed for tenant:', tid);
     throw new Error("OBO for Graph failed");
   }
 
