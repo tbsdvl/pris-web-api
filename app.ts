@@ -5,7 +5,7 @@ import cors from '@fastify/cors';
 import fastifyCookie from '@fastify/cookie';
 import dotenv from 'dotenv';
 import routes from './src/routes';
-import { authPlugin } from './src/handlers/auth';
+import { verify } from './src/handlers/auth';
 import path from 'path';
 import fs from 'fs';
 import { Http2SecureServer } from 'http2';
@@ -38,7 +38,8 @@ export default (): FastifyInstance<Http2SecureServer> => {
     }
   });
   
-  fastify.register(authPlugin);
+  fastify.addHook('preHandler', verify);
+  // fastify.register();
 
   fastify.register(routes);
   
