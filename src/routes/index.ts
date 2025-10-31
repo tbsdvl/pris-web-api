@@ -1,9 +1,9 @@
 'use strict';
 import jwt from 'jsonwebtoken'; // Add this import
 import { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
-import REPLY_STATUS from '../models/reply-status.model';
+import REPLY_STATUS from '../api/http/schemas/http-status.model.js';
 import dotenv from 'dotenv';
-import { checkIsTenantAdmin } from '../services/userService';
+import { checkIsTenantAdmin } from '../services/userService.js';
 dotenv.config();
 
 /**

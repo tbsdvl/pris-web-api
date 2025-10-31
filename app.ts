@@ -4,8 +4,8 @@ import Fastify, { FastifyInstance } from 'fastify';
 import cors from '@fastify/cors';
 import fastifyCookie from '@fastify/cookie';
 import dotenv from 'dotenv';
-import routes from './src/routes';
-import { verify } from './src/handlers/auth';
+import routes from './src/routes/index.js';
+import { verify } from './src/api/http/plugins/auth.js';
 import path from 'path';
 import fs from 'fs';
 import { Http2SecureServer } from 'http2';
@@ -17,14 +17,14 @@ export default (): FastifyInstance<Http2SecureServer> => {
     http2: true,
     https: {
       allowHTTP1: true,
-      key: fs.readFileSync(path.join(path.dirname(''), "certs", "localhost+2-key.pem")), // Path to private key
-      cert: fs.readFileSync(path.join(path.dirname(''), "certs", "localhost+2.pem")), // Path to certificate
+      key: fs.readFileSync(path.join(path.dirname(''), process.env.CERTS_DIRECTORY, process.env.KEY)),
+      cert: fs.readFileSync(path.join(path.dirname(''), process.env.CERTS_DIRECTORY, process.env.CERT)),
     }
   });
 
   fastify.register(cors, {
     origin: [process.env.WEB_URL],
-    credentials: true
+    credentials: true,
   });
 
   fastify.register(fastifyCookie, {
@@ -39,7 +39,6 @@ export default (): FastifyInstance<Http2SecureServer> => {
   });
   
   fastify.addHook('preHandler', verify);
-  // fastify.register();
 
   fastify.register(routes);
   

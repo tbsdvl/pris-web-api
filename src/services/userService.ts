@@ -1,6 +1,7 @@
-// userService.ts
-import { ConfidentialClientApplication, OnBehalfOfRequest } from "@azure/msal-node";
-import { createCCAForTenant } from "../config/msalConfig.js";
+'use strict';
+
+import { OnBehalfOfRequest } from "@azure/msal-node";
+import { createCCAForTenant } from "../api/http/config/msalConfig.js";
 
 export type AdminCheckResult = {
   isAdmin: boolean;
